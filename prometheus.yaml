@@ -1,0 +1,11 @@
+global:
+  scrape_interval: 15s
+  evaluation_interval: 15s
+
+scrape_configs:
+  - job_name: "windows_exporter_via_alloy"
+    metrics_path: "/api/v0/component/remotecfg/prometheus.exporter.windows.default/metrics"
+    static_configs:
+      - targets:
+        - "alloy:12345"
+        - "alloy:12344"

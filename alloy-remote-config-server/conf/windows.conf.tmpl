@@ -1,0 +1,34 @@
+// this is a comment: {{ .Id }}
+ prometheus.exporter.windows "default" {
+   // Enable the same collectors as your original config
+   enabled_collectors = [
+     "cpu",
+     "cs",
+     "logical_disk",
+     "memory",
+     "logon",
+     "net",
+     "os",
+     "service",
+     "system",
+     "tcp",
+     "process",
+     "netframework",
+     "iis",
+     "msmq",
+     "mssql",
+     "cache",
+     "physical_disk",
+     "scheduled_task",
+     "terminal_services",
+     "udp",
+     "vmware",
+     "license",
+     "printer",
+   ]
+
+   // Process collector configuration with exclusion pattern
+   process {
+     exclude = "(svchost|smss|csrss|wininit|services|lsass|winlogon|explorer|lsass|fontdrvhost|LogonUI|dwm|spoolsv|VGAuthService|vmtoolsd|vm3dservice|dllhost|WmiPrvSE|pacjsworker|msiexec|msdtc|WmiApSrv|Registry|ctfmon|sihost|chrome|taskhostw|powershell|smartscreen|ShellExperienceHost|SearchUI|RuntimeBroker|smartscreen|rdpclip|System|Idle|conhost|FixletDebugger|cmd|mmc|Dmgupgradehost|hpsensor|oacore|opcacta|opcmsga|ovbbccb|ovconfd|midaemon|ndtask|perfalarm|nessusd|vagentmc|diahost|ttd|diawp|userinit|AELicServer|Asb.ServiceManager|Asb.Watchdog|Dmgupgradesvc|LMWeb.WindowsService|NtDownT|ProductLicenseWindowsService|SecureDataService|SecurityHealthService|WUDFHost|dmgsvc|dsisrv|mgssecsvc|misrv|mwecsrv|ndinit|ovcd|perfalarmsrv|snmp|sntlkeyssrvr|spnsrvnt|sppsvc|ttsrv|aaTrend|ApplicationFrameHost|SecHealthUI|SppExtComObj|backgroundTaskHost|BinaryTree.ADMigrator.Agent).*"
+   }
+ }

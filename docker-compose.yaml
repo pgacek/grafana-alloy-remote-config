@@ -1,0 +1,71 @@
+services:
+  alloy:
+    image: grafana/alloy:latest
+    container_name: grafana-alloy
+    restart: unless-stopped
+    ports:
+      - "12345:12345"
+    volumes:
+      - ./config.alloy:/etc/alloy/config.alloy:ro
+    command: >
+      run
+      --server.http.listen-addr=0.0.0.0:12345
+      --storage.path=/var/lib/alloy/data
+      /etc/alloy/config.alloy
+    environment:
+      - ALLOY_LOG_LEVEL=info
+    networks:
+      - monitoring
+    depends_on:
+      - alloy-remote-config-server
+
+  alloy2:
+    image: grafana/alloy:latest
+    container_name: grafana-alloy2
+    restart: unless-stopped
+    ports:
+      - "12344:12345"
+    volumes:
+      - ./config2.alloy:/etc/alloy/config.alloy:ro
+    command: >
+      run
+      --server.http.listen-addr=0.0.0.0:12345
+      --storage.path=/var/lib/alloy/data
+      /etc/alloy/config.alloy
+    environment:
+      - ALLOY_LOG_LEVEL=info
+    networks:
+      - monitoring
+    depends_on:
+      - alloy-remote-config-server
+
+  alloy-remote-config-server:
+    build: ./alloy-remote-config-server
+    container_name: alloy-remote-config-server
+    environment:
+      CONFIG_FOLDER: /config
+    ports:
+      - 8888:8888
+      - 8080:8080
+    volumes:
+      - ./alloy-remote-config-server/conf:/config:ro
+    networks:
+      - monitoring
+
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: prometheus
+    restart: unless-stopped
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./prometheus.yaml:/etc/prometheus/prometheus.yaml:ro
+      - prometheus-data:/prometheus
+    networks:
+      - monitoring
+
+networks:
+  monitoring:
+
+volumes:
+  prometheus-data:

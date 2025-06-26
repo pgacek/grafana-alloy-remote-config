@@ -1,0 +1,13 @@
+// this is a comment: {{ .Id }}
+// this is a comment2: {{ .Id }}
+loki.echo "hello2" {
+}
+
+prometheus.exporter.unix "default" {
+}
+
+// this is a comment: {{ .Id }}
+// this is a comment: {{ .Id }}
+
+loki.echo "hello" {
+}
